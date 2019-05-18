@@ -61,3 +61,7 @@ typings/
 .next
 
 .zos.session
+
+zos.dev-*.json
+
+build/

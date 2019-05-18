@@ -2,7 +2,9 @@
   "zosversion": "2.2",
   "name": "ETHNYWordDao",
   "version": "0.0.1",
-  "contracts": {},
+  "contracts": {
+    "WordDAOToken": "WordDAOToken"
+  },
   "dependencies": {
     "openzeppelin-eth": "^2.1.3"
   }
