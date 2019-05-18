@@ -3,7 +3,8 @@
   "name": "ETHNYWordDao",
   "version": "0.0.1",
   "contracts": {
-    "WordDAOToken": "WordDAOToken"
+    "WordDAOToken": "WordDAOToken",
+    "Registry": "Registry"
   },
   "dependencies": {
     "openzeppelin-eth": "^2.1.3"
