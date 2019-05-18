@@ -10,7 +10,4 @@ contract WordDAOToken is StandaloneERC20 {
     ) public initializer {
       StandaloneERC20.initialize(name, symbol, decimals, initialSupply, initialHolder, minters, pausers);
   }
-
 }
-
-// instance of contract: 0xA57B8a5584442B467b4689F1144D269d096A3daF

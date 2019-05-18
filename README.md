@@ -26,9 +26,9 @@ zos session --network development --timeout 3600
 zos push --deploy-dependencies
 
 # Create individual contracts
-zos create WordDAOToken # Note the contract address
-
-zos create Registry # Note the contract address
+zos create WordDAOToken
+zos create Registry
+zos create Manager
 
 # Initialize contracts via a script in truffle console
 truffle console --network development

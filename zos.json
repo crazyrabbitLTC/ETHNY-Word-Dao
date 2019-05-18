@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "contracts": {
     "WordDAOToken": "WordDAOToken",
-    "Registry": "Registry"
+    "Registry": "Registry",
+    "Manager": "Manager"
   },
   "dependencies": {
     "openzeppelin-eth": "^2.1.3"

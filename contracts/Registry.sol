@@ -1,6 +1,9 @@
 pragma solidity ^0.5.0;
 
-contract Registry {
+import "zos-lib/contracts/Initializable.sol";
+import "./Registry.sol";
+
+contract Registry is Initializable {
 
   // Address of the manager contract
   // Only one allowed to call
@@ -20,17 +23,21 @@ contract Registry {
   uint32 public nextEntry;
 
   // Creates a new instance with address as owner
-  function initialize() public {
+  function initialize() public initializer {
     manager = msg.sender;
     nextEntry = 1; // Sets nextEntry to 1 (instead of 0, easier for comparison later)
   }
 
-  function compareStrings (string memory a, string memory b) public pure
+  function getManager() public view returns (address){
+    return manager;
+  }
+
+  function compareStrings (string memory a, string memory b) private pure
     returns (bool) {
       return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))) );
   }
 
-  function findWord(string memory word) public view returns (uint32) {
+  function findWord(string memory word) private view returns (uint32) {
     for (uint32 i = 1; i < nextEntry; i++) {
         if (compareStrings(words[i], word) == true) {
           return i;
@@ -52,5 +59,12 @@ contract Registry {
     words[nextEntry] = word;
     nextEntry += 1;
     return nextEntry-1;
+  }
+
+  function getWordAtKey(uint32 key) public view
+    returns (string memory) {
+    // Check that call came from manager
+    require(msg.sender == manager, "Only manager can get words");
+    return words[key];
   }
 }
