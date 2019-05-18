@@ -30,6 +30,7 @@ zos create WordDAOToken # Note the contract address
 
 zos create Registry # Note the contract address
 
-# Initialize contracts (can be done above directly with --init)
+# Initialize contracts via a script in truffle console
 truffle console --network development
+> exec ./initialize.js
 ```
