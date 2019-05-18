@@ -20,6 +20,7 @@
     "openzeppelin-eth": "^2.1.3",
     "simple-git": "^1.110.0",
     "truffle": "^5.0.18",
+    "truffle-contract": "^4.0.16",
     "zos-lib": "^2.3.0-rc.1"
   }
 }

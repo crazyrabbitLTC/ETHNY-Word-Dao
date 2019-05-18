@@ -7,6 +7,11 @@ A stab at creating a ETHNY version of the Word-Dao idea. New team! New Project!
 Terminal Window 1:
 
 ```bash
+# npm requirements
+npm install -g truffle
+npm install -g zos
+npm install
+
 # Run ganache in one terminal
 ganache-cli --deterministic
 ```

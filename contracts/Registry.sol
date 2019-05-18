@@ -17,7 +17,7 @@ contract Registry {
   mapping(uint32 => string) public words;
 
   // Keeps track of next slot to use to insert word
-  uint32 nextEntry;
+  uint32 public nextEntry;
 
   // Creates a new instance with address as owner
   function initialize() public {
