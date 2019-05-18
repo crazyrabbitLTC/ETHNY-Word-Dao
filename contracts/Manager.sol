@@ -23,12 +23,12 @@ contract Manager is Initializable {
 
     // initialize Registry
     registryInstance.initialize();
-
+    
     address[] memory addresses = new address[](1);
     addresses[0] = address(this);
-
+    
     // initialize WordDAOToken
-   wordDAOTokenInstance.initialize(
+    wordDAOTokenInstance.initialize(
       "WordDAOToken",
       "WDT",
       uint8(0), // 0 decimals
@@ -39,11 +39,11 @@ contract Manager is Initializable {
   }
 
   // Given a key, returns a word
-  function getWord(uint32 key) public
+  function getWord(uint32 key) public view
     returns (string memory word) {
       word = registryInstance.getWordAtKey(key);
     }
-  
+
 
   // Given a word, if it doesn't exist
   function setWord(string memory word) public

@@ -24,8 +24,8 @@ contract Registry is Initializable {
 
   // Creates a new instance with address as owner
   function initialize() public initializer {
-    manager = msg.sender;
-    nextEntry = 1; // Sets nextEntry to 1 (instead of 0, easier for comparison later)
+    //manager = msg.sender;
+    //nextEntry = uint32(1); // Sets nextEntry to 1 (instead of 0, easier for comparison later)
   }
 
   function getManager() public view returns (address){
