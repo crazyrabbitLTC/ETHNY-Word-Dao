@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './compresseDAO.png';
+import logo from './wordDAO.png';
 import './App.css';
 import Web3 from 'web3';
 const ManagerContractAbi = [
