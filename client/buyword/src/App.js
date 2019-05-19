@@ -16,6 +16,22 @@ const ManagerContractAbi = [
     payable: false,
     stateMutability: 'view',
     type: 'function',
+    signature: '0x8da5cb5b',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'price',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+    signature: '0xa035b1fe',
   },
   {
     constant: true,
@@ -30,6 +46,7 @@ const ManagerContractAbi = [
     payable: false,
     stateMutability: 'view',
     type: 'function',
+    signature: '0xc0e0f379',
   },
   {
     constant: true,
@@ -44,26 +61,12 @@ const ManagerContractAbi = [
     payable: false,
     stateMutability: 'view',
     type: 'function',
+    signature: '0xe6809db6',
   },
   {
-    constant: false,
-    inputs: [
-      {
-        name: 'temp',
-        type: 'address',
-        indexed: false,
-      },
-      {
-        name: 'wordDAOTokenAddress',
-        type: 'address',
-      },
-    ],
-    name: 'LogAddress',
-    outputs: [],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'event',
-    anonymous: false,
+    payable: true,
+    stateMutability: 'payable',
+    type: 'fallback',
   },
   {
     constant: false,
@@ -78,18 +81,14 @@ const ManagerContractAbi = [
       },
     ],
     name: 'initialize',
-    outputs: [
-      {
-        name: 'word',
-        type: 'string',
-      },
-    ],
+    outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
+    signature: '0x485cc955',
   },
   {
-    constant: true,
+    constant: false,
     inputs: [
       {
         name: 'key',
@@ -103,9 +102,10 @@ const ManagerContractAbi = [
         type: 'bytes32',
       },
     ],
-    payable: false,
-    stateMutability: 'view',
+    payable: true,
+    stateMutability: 'payable',
     type: 'function',
+    signature: '0xe1d87d50',
   },
   {
     constant: false,
@@ -125,6 +125,7 @@ const ManagerContractAbi = [
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
+    signature: '0x8527831b',
   },
   {
     constant: false,
@@ -137,13 +138,49 @@ const ManagerContractAbi = [
     name: 'addBytes',
     outputs: [
       {
-        name: '',
+        name: 'key',
         type: 'uint32',
       },
     ],
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
+    signature: '0xb14d0728',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'getDictionarySize',
+    outputs: [
+      {
+        name: 'size',
+        type: 'uint32',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+    signature: '0xa8e682df',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdraw',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+    signature: '0x2e1a7d4d',
   },
 ];
 
@@ -169,7 +206,7 @@ function initEthereum() {
 function contract(web3) {
   window.contract = new web3.eth.Contract(
     ManagerContractAbi,
-    '0xDb56f2e9369E0D7bD191099125a3f6C370F8ed15',
+    '0x4DC1ABd5181C0256E57cB7215b73781C5D10D224',
     {}
   );
 }
@@ -212,16 +249,17 @@ class WordForm extends React.Component {
       .getIndex(wordBytes)
       .call()
       .then(key => {
-        const msg = `Someone already added "${word}" to the list at key ${key}.`;
-        this.setState({ value: word, error: msg });
-      })
-      .catch(_ => {
-        return window.contract.methods
-          .addBytes(wordBytes)
-          .send({ from: window.defaultAccount, gas: 500000 })
-          .then(key => {
-            this.error = `Adding ${word} to the DAOionary at key ${key}.`;
-          });
+        if (key === 0) {
+          return window.contract.methods
+            .addBytes(wordBytes)
+            .send({ from: window.defaultAccount, gas: 500000 })
+            .then(_ => {
+              this.msg = `Adding ${word} to the Word DAO.`;
+            });
+        } else {
+          const msg = `"${word}" is already in the list.`;
+          this.setState({ value: word, error: msg });
+        }
       });
 
     event.preventDefault();
@@ -232,14 +270,18 @@ class WordForm extends React.Component {
       <div className="form-style-5">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <fieldset>
-            <legend>Buy a word</legend>
+            <legend>Buy a word:</legend>
             <label>
-              Word:
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
+              <input
+                type="text"
+                placeholder="e.g. token"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
               <span>{this.state.error}</span>
             </label>
           </fieldset>
-          <input type="submit" value="Check" />
+          <input type="submit" value="Buy" />
         </form>
       </div>
     );
