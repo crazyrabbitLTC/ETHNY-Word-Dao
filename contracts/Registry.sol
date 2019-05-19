@@ -20,6 +20,10 @@ contract Registry is Initializable {
     nextEntry = uint32(1); // Sets nextEntry to 1 (instead of 0, easier for comparison later)
   }
 
+  function getCount() public view returns (uint32) {
+    return nextEntry-1;
+  }
+
   function getManager() public view returns (address){
     return manager;
   }

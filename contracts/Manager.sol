@@ -66,16 +66,21 @@ contract Manager is Initializable {
       wordDAOTokenInstance.mint(msg.sender, 1);
     }
 
-    function withdraw(uint amount) public
-      returns(bool) {
-      require(msg.sender == owner, "Only owner may call this");
-      require(amount <= address(this).balance, "Amount larger than balance");
-      owner.transfer(amount);
-      return true;
+  function getDictionarySize() public view
+    returns (uint32 size) {
+      size = registryInstance.getCount();
     }
 
-    // fallback payable function
-    function () external payable {
+  function withdraw(uint amount) public
+    returns(bool) {
+    require(msg.sender == owner, "Only owner may call this");
+    require(amount <= address(this).balance, "Amount larger than balance");
+    owner.transfer(amount);
+    return true;
+  }
+
+  // fallback payable function
+  function () external payable {
 
   }
 }
