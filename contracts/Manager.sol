@@ -25,8 +25,8 @@ contract Manager is Initializable {
     wordDAOTokenInstance = WordDAOToken(wordDAOTokenAddress);
     registryInstance = Registry(registryAddress);
 
-    emit LogAddress(wordDAOTokenAddress);
-    emit LogAddress(registryAddress);
+    //emit LogAddress(wordDAOTokenAddress);
+    //emit LogAddress(registryAddress);
     // initialize Registry
     registryInstance.initialize();
     registryInstance.addString("hello");
@@ -61,15 +61,4 @@ contract Manager is Initializable {
     returns (uint32) {
       return registryInstance.addBytes(byteString);
     }
-  /*
-  function addBytesToInstance(bytes32 byteString, Registry regInstance) public 
-    returns (uint32) {
-      return regInstance.addBytes(byteString);
-    }
-  
-    function getBytesByKeyToInstance(uint32 key, Registry regInstance) public view
-      returns (bytes32 word) {
-        word = regInstance.getBytesByKey(key);
-    }
-  */
 }

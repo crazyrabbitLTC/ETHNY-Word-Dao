@@ -1,10 +1,8 @@
 pragma solidity ^0.5.0;
 
 import "zos-lib/contracts/Initializable.sol";
-import "./Registry.sol";
 
 contract Registry is Initializable {
-
 
   // Address of the manager contract
   address public manager;
@@ -29,8 +27,7 @@ contract Registry is Initializable {
   // Use this function to add a byteString to dictionary
   // Fails if the bytestring already exists
   function addBytes(bytes32 byteString) public returns (uint32) {
-    // TODO: enable
-    //require(msg.sender == manager, "Only manager can add words");
+    require(msg.sender == manager, "Only manager can add words");
     require(bytesToInt[byteString] == uint32(0), "Bytes already exist");
     intToBytes[nextEntry] = byteString;
     bytesToInt[byteString] = nextEntry;
@@ -40,15 +37,13 @@ contract Registry is Initializable {
   
   // Use this function to lookup a key and get a bytestring
   function getBytesByKey(uint32 key) public view returns (bytes32 byteString) {
-    // TODO: enable
-    //require(msg.sender == manager, "Only manager can add words");
+    require(msg.sender == manager, "Only manager can add words");
     byteString = intToBytes[key];
     require(byteString.length > 0, "Key doesn't exist");
   }
 
   function getKeyByBytes(bytes32 byteString) public view returns (uint32 key) {
-    // TODO: enable
-    //require(msg.sender == manager, "Only manager can add words");
+    require(msg.sender == manager, "Only manager can add words");
     key = bytesToInt[byteString];
     require(key > uint32(0), "Bytestring doesn't exist");
     return key;

@@ -9,6 +9,5 @@ module.exports = async function(deployer) {
 
   console.log(WordDAOToken.address);
   console.log(Registry.address);
-  console.log(typeof Registry.address);
-  await managerInstance.initialize(WordDAOToken.address, Registry.address);
+  await managerInstance.initialize(Registry.address, WordDAOToken.address);
 };

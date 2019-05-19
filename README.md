@@ -19,6 +19,12 @@ ganache-cli --deterministic
 Terminal Window 2:
 
 ```bash
+truffle migrate
+```
+
+Or:
+
+```bash
 # Setup zos session
 zos session --network development --timeout 3600
 
@@ -31,6 +37,5 @@ zos create Registry
 zos create Manager
 
 # Initialize contracts via a script in truffle console
-truffle console --network development
-> exec ./initialize.js
+truffle exec ./initialize.js --network development
 ```
