@@ -7,7 +7,5 @@ module.exports = async function(deployer) {
   registryInstance = await deployer.deploy(Registry);
   managerInstance = await deployer.deploy(Manager);
 
-  console.log(WordDAOToken.address);
-  console.log(Registry.address);
   await managerInstance.initialize(Registry.address, WordDAOToken.address);
 };

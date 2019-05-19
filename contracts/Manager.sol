@@ -7,7 +7,8 @@ import "./Registry.sol";
 contract Manager is Initializable {
 
   // address of the owner
-  address public owner;
+  address payable public owner;
+  uint256 public price;
 
   // Registry contract instance on chain
   Registry public registryInstance;
@@ -15,18 +16,12 @@ contract Manager is Initializable {
   // WordDAOToken contract instance on chain
   WordDAOToken public wordDAOTokenInstance;
 
-  event LogAddress (
-    address temp
-  );
-
   // Initializer, requires address for Registry and WordDAOToken
   function initialize(address registryAddress, address wordDAOTokenAddress) public initializer {
     owner = msg.sender;
     wordDAOTokenInstance = WordDAOToken(wordDAOTokenAddress);
     registryInstance = Registry(registryAddress);
 
-    //emit LogAddress(wordDAOTokenAddress);
-    //emit LogAddress(registryAddress);
     // initialize Registry
     registryInstance.initialize();
     registryInstance.addString("hello");
@@ -37,17 +32,20 @@ contract Manager is Initializable {
     // initialize WordDAOToken
     wordDAOTokenInstance.initialize(
       "WordDAOToken",
-      "WDT",
+      "WORD",
       uint8(0), // 0 decimals
-      uint256(1000000), // 0 initial supply
+      uint256(0), // 0 initial supply
       address(this), // initialHolder is self
       addresses, // minters limited to self
       addresses); // pausers limited to self
+
+      price = 0.000001 ether;
   }
 
   // Given a key, returns a word
-  function getBytesByKey(uint32 key) public view
+  function getBytesByKey(uint32 key) public payable
     returns (bytes32 word) {
+      require(msg.value > price, "Not enough payment included");
       word = registryInstance.getBytesByKey(key);
     }
 
@@ -58,7 +56,26 @@ contract Manager is Initializable {
 
   // Given a word, if it doesn't exist
   function addBytes(bytes32 byteString) public
-    returns (uint32) {
-      return registryInstance.addBytes(byteString);
+    returns (uint32 key) {
+      // add word to dictionary
+      key = registryInstance.addBytes(byteString);
+
+      // mint a new token for sender
+      // TODO: perhaps better to give them number of tokens proportionate to the length of the word
+      // that they added?
+      wordDAOTokenInstance.mint(msg.sender, 1);
     }
+
+    function withdraw(uint amount) public
+      returns(bool) {
+      require(msg.sender == owner, "Only owner may call this");
+      require(amount <= address(this).balance, "Amount larger than balance");
+      owner.transfer(amount);
+      return true;
+    }
+
+    // fallback payable function
+    function () external payable {
+
+  }
 }
