@@ -8,6 +8,8 @@ This repo consists of three contracts:
 - Registry: Stores all the words in uint32 -> bytes32
 - Manager: Owner of both of the above contract and interface to access them. Charges a tiny fee to get a word back, which is planned to go to owners of WordDAOToken (last part not implemented yet).
 
+Also, check out this repo for a contract that utilizes this manager: [Ethnewyork-poi-tagger](https://github.com/j0x0j/ethnewyork-poi-tagger)
+
 ## Instructions to get this running
 
 Terminal Window 1:
