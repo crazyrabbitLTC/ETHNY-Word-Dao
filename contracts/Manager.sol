@@ -71,6 +71,8 @@ contract Manager is Initializable {
       size = registryInstance.getCount();
     }
 
+  // TODO: update to share with owners of WordDAOToken
+  // Currently, let's the owner of Manager withdraw.
   function withdraw(uint amount) public
     returns(bool) {
     require(msg.sender == owner, "Only owner may call this");
