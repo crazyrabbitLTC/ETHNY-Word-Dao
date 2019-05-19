@@ -10,6 +10,12 @@ This repo consists of three contracts:
 
 Also, check out this repo for a contract that utilizes this manager: [Ethnewyork-poi-tagger](https://github.com/j0x0j/ethnewyork-poi-tagger)
 
+You can also check out these contracts on Ropsten:
+
+Manager: "0x4DC1ABd5181C0256E57cB7215b73781C5D10D224"
+Registry: "0x03A6b36868bd21a90AD663de48fD6eAf87Bcb672"
+WordDAOToken: "0x49b8AadB90268b6eF7aC0a033d8ca6557519EB6C"
+
 ## Instructions to get this running
 
 Terminal Window 1:
