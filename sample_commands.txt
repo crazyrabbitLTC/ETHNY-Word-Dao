@@ -1,0 +1,6 @@
+let managerInstance = await Manager.at("0xC89Ce4735882C9F0f0FE26686c53074E09B0D550")
+let bytestring = web3.utils.hexToBytes(web3.utils.asciiToHex("yodelere"))
+let output = await managerInstance.addBytes(bytestring)
+let accounts = web3.eth.getAccounts()
+managerInstance.getBytesByKey(1, {from: accounts[0], value: 5e12})
+managerInstance.getBytesByKey(2)
